@@ -89,6 +89,13 @@ the script needs access to the container runtime; on Docker installations this
 normally means membership of the `docker` group or running the deployment
 script with the host's approved administrative procedure.
 
+The image includes a Docker healthcheck for `/healthz`. On the reference host,
+root cron runs `watchdog/check_route_hints.sh` every five minutes. It recovers
+both stopped containers and containers whose HTTP healthcheck fails, while
+enforcing a ten-minute cooldown between recovery attempts to avoid a restart
+storm. Docker's `unless-stopped` policy continues to handle host reboots and
+ordinary process exits.
+
 For a public deployment, put TLS in front of the service and point DNS such as
 `js8mail.oh3spn.fi` at the host. The JS8Mail client should use the resulting
 HTTPS URL. Port `8787` is only the reference direct-publication port; a reverse
