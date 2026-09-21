@@ -229,6 +229,12 @@ def main() -> None:
     Path(filename).expanduser().parent.mkdir(parents=True, exist_ok=True)
     store = Store(filename)
     Handler.store = store
+    def prune_loop() -> None:
+        while True:
+            time.sleep(5 * 60)
+            store.prune()
+
+    threading.Thread(target=prune_loop, name="route-hints-pruner", daemon=True).start()
     server = RouteHintsServer((host, port), Handler)
     print(f"JS8Mail route hints: http://{host}:{port}", flush=True)
     server.serve_forever()
