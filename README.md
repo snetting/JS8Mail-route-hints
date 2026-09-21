@@ -22,8 +22,13 @@ The default listen port is `8787`; set `ROUTE_HINTS_PORT` to change it.
 `start.sh` detects Podman first and Docker second:
 
 ```sh
-ROUTE_HINTS_PORT=8787 ROUTE_HINTS_DATA=./data ./start.sh
+./start.sh
 ```
+
+The defaults are host port `8787` and persistent data directory
+`/data/container-run/js8mail-route-hints`. Override them with `--port` and
+`--data`, or with the `ROUTE_HINTS_PORT` and `ROUTE_HINTS_DATA` environment
+variables.
 
 The container listens on `0.0.0.0` inside the container and publishes the
 configured port. Put a TLS reverse proxy in front of a public deployment, for
@@ -73,7 +78,7 @@ On a host such as `arm.track3.org.uk`, clone this repository and run:
 ```sh
 git clone git@github.com:snetting/JS8Mail-route-hints.git /home/steve/git/JS8Mail-route-hints
 cd /home/steve/git/JS8Mail-route-hints
-ROUTE_HINTS_PORT=8787 ROUTE_HINTS_DATA=/data/container-run/js8mail-route-hints ./start.sh
+./start.sh
 ```
 
 The script builds the image, detects Docker or Podman, publishes the selected
