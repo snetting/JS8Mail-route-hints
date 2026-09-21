@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "js8mail-route-hints"
+version = "0.1.0"
+description = "Short-lived optional route evidence service for JS8Mail"
+requires-python = ">=3.12"
+
+[project.scripts]
+js8mail-route-hints = "route_hints_service.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
