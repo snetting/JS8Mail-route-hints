@@ -49,10 +49,11 @@ fi
 
 "$runtime" build -t js8mail-route-hints .
 "$runtime" rm -f "$name" >/dev/null 2>&1 || true
-exec "$runtime" run --name "$name" --restart unless-stopped \
+container_id=$("$runtime" run -d --name "$name" --restart unless-stopped \
   -p "${port}:${port}" \
   -e ROUTE_HINTS_HOST=0.0.0.0 \
   -e ROUTE_HINTS_PORT="$port" \
   -e ROUTE_HINTS_DATABASE=/data/route-hints.sqlite3 \
   -v "$(cd "$data" && pwd):/data" \
-  js8mail-route-hints
+  js8mail-route-hints)
+printf 'Started %s (%s) on port %s\n' "$name" "$container_id" "$port"
